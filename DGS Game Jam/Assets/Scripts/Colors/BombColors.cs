@@ -53,5 +53,14 @@ namespace Colors
             Assert.IsTrue(this._currentColors.ContainsKey(color));
             this._currentColors[color] -= Mathf.Max(0,amount);
         }
+
+        public void DecreaseAll(float amount)
+        {
+            List<Color> keys = _currentColors.Keys.ToList();
+            foreach(var key in keys)
+            {
+                Decrease(key, amount);
+            }
+        }
     }
 }
