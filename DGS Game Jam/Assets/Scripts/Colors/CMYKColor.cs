@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.XR.WSA;
 
 namespace Colors
 {
@@ -28,17 +30,31 @@ namespace Colors
             this.k = k;
         }
 
-        public static Color CombineColors(params KeyValuePair<Color, int>[] aColors)
+        public static Color CombineColors(IEnumerable<KeyValuePair<Color, float>> aColors)
         {
             Color result = new Color(0,0,0,0);
-            foreach(KeyValuePair<Color, int> col in aColors)
+            KeyValuePair<Color, float>[] notEmpty = aColors.Where(x => x.Value > 0).ToArray();
+            foreach(KeyValuePair<Color, float> col in notEmpty)
             {
-                result += col.Key * col.Value;
+                result += (col.Key * col.Value);
             }
-            result /= aColors.Length;
+            result /= notEmpty.Length;
+            float max = GetHighestColorValue(result);
+            float scale = 1 / max;
+            result.r *= scale;
+            result.g *= scale;
+            result.b *= scale;
             return result;
         }
-        
+
+        private static float GetHighestColorValue(Color color)
+        {
+            float max = color.r;
+            max = Mathf.Max(max, color.g);
+            max = Mathf.Max(max, color.b);
+            return max;
+        }
+
         public Color ToUnityColor()
         {
             return new Color((1f - this.c) * (1f - this.k), (1f - this.m) * (1 - this.k),
@@ -48,6 +64,11 @@ namespace Colors
         public float ToForce()
         {
             Color color = this.ToUnityColor();
+            return ToForce(color);
+        }
+
+        public static float ToForce(Color color)
+        {
             return color.r + color.g + color.b;
         }
 
