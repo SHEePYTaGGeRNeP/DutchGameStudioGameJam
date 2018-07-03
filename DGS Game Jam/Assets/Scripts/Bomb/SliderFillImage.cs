@@ -27,8 +27,13 @@ public class SliderFillImage : MonoBehaviour {
         SetFill();
     }
 
-    private void SetFill()
+    public void SetFill()
     {
         _image.fillAmount = _slider.normalizedValue;
+    }
+
+    public void SetFill(float fill)
+    {
+        _image.fillAmount = Mathf.Clamp01(fill);
     }
 }
