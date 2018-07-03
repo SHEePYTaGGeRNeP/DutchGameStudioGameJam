@@ -63,6 +63,8 @@ namespace Colors
                 return false;
             if (remainderColor.r < -tolerance || remainderColor.g < -tolerance || remainderColor.b < -tolerance)
                 return false;
+            if (Math.Abs(remainderColor.r) + Math.Abs(remainderColor.g) + Math.Abs(remainderColor.b) > tolerance)
+                return false;
             return true;
         }
 

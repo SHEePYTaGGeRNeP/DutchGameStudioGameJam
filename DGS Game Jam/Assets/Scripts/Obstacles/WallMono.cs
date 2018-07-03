@@ -22,5 +22,16 @@ namespace Obstacles
             this._spriteRenderer.color = c;
 
         }
+
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+            Bomb b = other.gameObject.GetComponent<Bomb>();
+            if (b == null)
+                return;
+            if (!this._wall.IsDestroyedByColor(b.CurrentColor))
+                return;
+            Destroy(this);
+        }
+                
     }
 }

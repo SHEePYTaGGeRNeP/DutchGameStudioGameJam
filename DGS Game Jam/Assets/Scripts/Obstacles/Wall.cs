@@ -20,8 +20,9 @@ namespace Obstacles
         public bool IsDestroyedByColor(Color color)
         {
             Color remainder = this.wallColor - color;
-            LogHelper.Log(typeof(Wall), String.Format("{0} - {1} = {2}", this.wallColor , color, remainder));
-            return CMYKColor.IsWithinTolerance(remainder, this.wallTolerance);
+            bool isWithinTolerance = CMYKColor.IsWithinTolerance(remainder, this.wallTolerance);
+            LogHelper.Log(typeof(Wall), String.Format("{0} - {1}. Destroy={2}", this.wallColor , color, isWithinTolerance));
+            return isWithinTolerance;
         }
     }
 }

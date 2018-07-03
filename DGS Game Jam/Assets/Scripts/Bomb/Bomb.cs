@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Colors;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Bomb : MonoBehaviour {
 
     [SerializeField]
     private SliderFillImage _cyanFill, _magentaFill, _yellowFill;
+
+    [SerializeField]
+    private SpriteRenderer _colorSprite;
     [SerializeField]
     private float _decay, _force;
 
@@ -20,7 +24,9 @@ public class Bomb : MonoBehaviour {
 
     [SerializeField]
     private BombColors _bombColors;
-    
+
+    public Color CurrentColor { get { return this._bombColors.CurrentColorValue; } }
+
     private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
@@ -62,5 +68,6 @@ public class Bomb : MonoBehaviour {
     private void Drain()
     {
         _bombColors.DecreaseAll(_decay);
+        _colorSprite.color = _bombColors.CurrentColorValue;
     }
 }
