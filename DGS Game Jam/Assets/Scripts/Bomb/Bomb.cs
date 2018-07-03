@@ -68,6 +68,9 @@ public class Bomb : MonoBehaviour {
     private void Drain()
     {
         _bombColors.DecreaseAll(_decay);
+        _cyanFill.Slider.value = _bombColors.GetAmount(Color.cyan);
+        _magentaFill.Slider.value = _bombColors.GetAmount(Color.magenta);
+        _yellowFill.Slider.value = _bombColors.GetAmount(Color.yellow);
         _colorSprite.color = _bombColors.CurrentColorValue;
     }
 }
