@@ -3,12 +3,13 @@ using UnityEngine;
 
 namespace Colors
 {
+    [System.Serializable]
     public class CMYKColor : IEquatable<CMYKColor>
     {
-        public readonly float c;
-        public readonly float m;
-        public readonly float y;
-        public readonly float k;
+        public float c;
+        public float m;
+        public float y;
+        public float k;
 
         public CMYKColor(Color rgbColor)
         {
@@ -26,18 +27,40 @@ namespace Colors
             this.k = k;
         }
 
+        public static Color CombineColors(params Color[] aColors)
+        {
+            Color result = new Color(0,0,0,0);
+            foreach(Color col in aColors)
+            {
+                result += col;
+            }
+            result /= aColors.Length;
+            return result;
+        }
+        
         public Color ToUnityColor()
         {
             return new Color((1f - this.c) * (1f - this.k), (1f - this.m) * (1 - this.k),
                 (1f - this.y) * (1f - this.k));
         }
 
+        public float ToForce()
+        {
+            Color color = this.ToUnityColor();
+            return color.r + color.g + color.b;
+        }
+
+        public override string ToString()
+        {
+            return $"{this.c},{this.m},{this.y},{this.k}";
+        }
+
         #region Equal Overrides
 
         public static bool operator ==(CMYKColor cc1, CMYKColor cc2)
         {
-            if (object.ReferenceEquals(cc1, null))
-                return object.ReferenceEquals(cc2, null);
+            if (ReferenceEquals(cc1, null))
+                return ReferenceEquals(cc2, null);
 
             return cc1.Equals(cc2);
         }

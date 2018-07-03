@@ -23,13 +23,17 @@ namespace Editor
         public void _TEST_SIMPLE_COLORS()
         {
             CMYKColor cc = new CMYKColor(Color.red);
-            Assert.AreEqual(new CMYKColor(0,100,100,0), cc);
+            Assert.AreEqual(new CMYKColor(0,1,1,0), cc);
+            cc = new CMYKColor(Color.cyan);
+            Assert.AreEqual(new CMYKColor(1,0,0,0), cc);
         }
 
         [Test]
         public void _TEST_TO_UNITY_COLORS()
         {
-            CMYKColor cc = new CMYKColor(Color.red);
+            CMYKColor cc = new CMYKColor(1,0,0,0);
+            Assert.AreEqual(Color.cyan, cc.ToUnityColor());
+            cc = new CMYKColor(Color.red);
             Assert.AreEqual(Color.red, cc.ToUnityColor());
         }
 
@@ -37,14 +41,19 @@ namespace Editor
         public void _TEST_SIMPLE_COMPLEX_COLORS()
         {
             CMYKColor cc = new CMYKColor(Color.red);
-            Assert.AreEqual(new CMYKColor(0,100,100,0), cc);
+            Assert.AreEqual(new CMYKColor(0,1,1,0), cc);
+        }
+        [Test]
+        public void _TEST_MIX_COLORS()
+        {
+            Assert.AreEqual(Color.magenta, CMYKColor.CombineColors(Color.red, Color.blue));
         }
 
 
         // A UnityTest behaves like a coroutine in PlayMode
         // and allows you to yield null to skip a frame in EditMode
         [UnityTest]
-        public IEnumerator ChimcalColorTestsWithEnueratorPasses()
+        public IEnumerator TestsWithEnueratorPasses()
         {
             // Use the Assert class to test conditions.
             // yield to skip a frame
