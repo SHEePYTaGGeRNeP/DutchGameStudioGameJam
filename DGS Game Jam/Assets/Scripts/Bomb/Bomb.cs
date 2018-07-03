@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Colors;
@@ -7,6 +6,7 @@ using UnityEngine.UI;
 using System;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(ScreenFreezer))]
 public class Bomb : MonoBehaviour {
 
     [SerializeField]
@@ -19,7 +19,9 @@ public class Bomb : MonoBehaviour {
     [SerializeField]
     private ParticleSystem thrust, content;
     [SerializeField]
-    private BombColors _bombColors;
+    private int _freezeDuration;
+    [SerializeField]
+    private CameraFX _cameraFX;
 
     public delegate void BombFireEventHandler();
     public static event BombFireEventHandler onFire;
@@ -28,6 +30,8 @@ public class Bomb : MonoBehaviour {
     private bool isFired;
     private Rigidbody2D _rigidbody2D;
     private ParticleSystem[] _thrustChildren;
+    private ScreenFreezer _screenFreezer;
+    private BombColors _bombColors;
 
 
 
@@ -35,14 +39,15 @@ public class Bomb : MonoBehaviour {
 
     private void Awake()
     {
+        _screenFreezer = GetComponent<ScreenFreezer>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _rigidbody2D.isKinematic = true;
         _thrustChildren = thrust.GetComponentsInChildren<ParticleSystem>();
-        _bombColors.OnEmpty += OnEmpty;
     }
 
     public void Fire()
     {
+ 
         onFire?.Invoke();
         thrust.Play();
         _rigidbody2D.isKinematic = false;
@@ -51,8 +56,18 @@ public class Bomb : MonoBehaviour {
                                                                          { Color.magenta, _magenta},
                                                                          { Color.yellow, _yellow}};
         _bombColors = new BombColors(temp);
+        _bombColors.OnEmpty += OnEmpty;
         isFired = true;
-        _bombColors.OnEmpty += this.OnEmpty;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        _cameraFX.ShakeCamera();
+        if (collision.transform.tag == "Wall")
+        {
+            _screenFreezer.Go(_freezeDuration);
+        }
+        
     }
 
     private void FixedUpdate()
@@ -75,7 +90,6 @@ public class Bomb : MonoBehaviour {
 
     private void OnEmpty(object sender, EventArgs e)
     {
-        LogHelper.Log(typeof(Bomb), "ON EMPTY!");
         thrust.Stop();
     }
 
