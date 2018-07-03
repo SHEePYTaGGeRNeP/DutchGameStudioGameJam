@@ -61,7 +61,7 @@ namespace Colors
         {
             if (remainderColor.r > tolerance || remainderColor.g > tolerance || remainderColor.b > tolerance)
                 return false;
-            if (remainderColor.r < -tolerance || remainderColor.g < -tolerance || remainderColor.b < !tolerance)
+            if (remainderColor.r < -tolerance || remainderColor.g < -tolerance || remainderColor.b < -tolerance)
                 return false;
             return true;
         }
