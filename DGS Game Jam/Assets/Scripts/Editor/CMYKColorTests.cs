@@ -47,8 +47,8 @@ namespace Editor
         [Test]
         public void _TEST_MIX_COLORS()
         {
-            Assert.AreEqual(Color.magenta, CMYKColor.CombineColors(new KeyValuePair<Color, int>(Color.red, 1), 
-                new KeyValuePair<Color, int>(Color.blue,1)));
+            Assert.AreEqual(Color.magenta, CMYKColor.CombineColors(new[] {new KeyValuePair<Color, float>(Color.red, 1f), 
+                new KeyValuePair<Color, float>(Color.blue,1f)}));
         }
 
 
