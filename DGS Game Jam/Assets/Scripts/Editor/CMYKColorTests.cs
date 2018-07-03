@@ -49,6 +49,12 @@ namespace Editor
         {
             Assert.AreEqual(Color.magenta, CMYKColor.CombineColors(new[] {new KeyValuePair<Color, float>(Color.red, 1f), 
                 new KeyValuePair<Color, float>(Color.blue,1f)}));
+            Assert.AreEqual(1, CMYKColor.CombineColors(new[] {new KeyValuePair<Color, float>(Color.red, 1f), 
+                new KeyValuePair<Color, float>(Color.blue,1f)}).a);
+            Assert.AreEqual(Color.cyan, CMYKColor.CombineColors(new[] {new KeyValuePair<Color, float>(Color.green, 1f), 
+                new KeyValuePair<Color, float>(Color.blue,1f)}));
+            Assert.AreEqual(Color.black, CMYKColor.CombineColors(new[] {new KeyValuePair<Color, float>(Color.green, 0f), 
+                new KeyValuePair<Color, float>(Color.blue,0f)}));
         }
 
 

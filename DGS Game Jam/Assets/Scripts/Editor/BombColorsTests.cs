@@ -29,7 +29,7 @@ namespace Editor
         public void _THRUST_NaN()
         {
             BombColors bc = new BombColors(new Dictionary<Color, float>() {{Color.red, 0f}, {Color.blue, 0f}, {Color.green, 0f}});
-            Assert.AreEqual(new Color(0,0,0,0), bc.CurrentColorValue);
+            Assert.AreEqual(Color.black, bc.CurrentColorValue);
             Assert.AreEqual(0, bc.CurrentThrust);
         }
     }
