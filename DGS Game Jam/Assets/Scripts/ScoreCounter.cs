@@ -9,15 +9,22 @@ namespace DefaultNamespace
         [SerializeField]
         private UnityEngine.UI.Text _text;
 
-        private int score = 0;
+        private int _score = 0;
 
         private void Awake()
         {
-            WallMono.OnBlockDestroyed += (sender, args) =>
-            {
-                this.score++;
-                this._text.text = "Score: " + this.score;
-            };
+            WallMono.OnBlockDestroyed += this.WallMonoOnOnBlockDestroyed;
+        }
+
+        private void WallMonoOnOnBlockDestroyed(object sender, EventArgs eventArgs)
+        {
+            this._score++;
+            this._text.text = "Score: " + this._score;
+        }
+
+        private void OnDestroy()
+        {
+            WallMono.OnBlockDestroyed -= this.WallMonoOnOnBlockDestroyed;
         }
     }
 }
