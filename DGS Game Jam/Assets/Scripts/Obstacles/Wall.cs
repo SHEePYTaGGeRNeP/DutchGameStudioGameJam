@@ -1,4 +1,5 @@
 ﻿using System;
+using Colors;
 using UnityEngine;
 
 namespace Obstacles
@@ -20,7 +21,7 @@ namespace Obstacles
         {
             Color remainder = this.wallColor - color;
             LogHelper.Log(typeof(Wall), String.Format("{0} - {1} = {2}", this.wallColor , color, remainder));
-            return remainder.RGBSum() <= this.wallTolerance;
+            return CMYKColor.IsWithinTolerance(remainder, this.wallTolerance);
         }
     }
 }

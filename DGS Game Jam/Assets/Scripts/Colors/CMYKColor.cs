@@ -19,7 +19,7 @@ namespace Colors
             this.k = 1f - Mathf.Max(rgbColor.r, rgbColor.g, rgbColor.b);
             this.c = (1f - rgbColor.r - this.k) / (1f - this.k);
             this.m = (1f - rgbColor.g - this.k) / (1f - this.k);
-            this.y = (1f - rgbColor.b - this.k) / (1f - this.k);            
+            this.y = (1f - rgbColor.b - this.k) / (1f - this.k);
         }
 
         public CMYKColor(float c, float m, float y, float k)
@@ -32,20 +32,20 @@ namespace Colors
 
         public static Color CombineColors(IEnumerable<KeyValuePair<Color, float>> aColors)
         {
-            Color result = new Color(0,0,0,0);
+            Color result = new Color(0, 0, 0, 0);
             KeyValuePair<Color, float>[] notEmpty = aColors.Where(x => x.Value > 0).ToArray();
             if (notEmpty.Length == 0)
                 return result;
-            foreach(KeyValuePair<Color, float> col in notEmpty)
+            foreach (KeyValuePair<Color, float> col in notEmpty)
             {
                 result += (col.Key * col.Value);
             }
             result /= notEmpty.Length;
             float max = GetHighestColorValue(result);
             float scale = 1 / max;
-            result.r *= scale;
-            result.g *= scale;
-            result.b *= scale;
+            result.r = Mathf.Clamp01(result.r * scale);
+            result.g = Mathf.Clamp01(result.g * scale);
+            result.b = Mathf.Clamp01(result.b * scale);
             return result;
         }
 
@@ -55,6 +55,15 @@ namespace Colors
             max = Mathf.Max(max, color.g);
             max = Mathf.Max(max, color.b);
             return max;
+        }
+
+        public static bool IsWithinTolerance(Color remainderColor, float tolerance)
+        {
+            if (remainderColor.r > tolerance || remainderColor.g > tolerance || remainderColor.b > tolerance)
+                return false;
+            if (remainderColor.r < -tolerance || remainderColor.g < -tolerance || remainderColor.b < !tolerance)
+                return false;
+            return true;
         }
 
         public Color ToUnityColor()
@@ -103,7 +112,7 @@ namespace Colors
         }
 
         public override bool Equals(object obj)
-        {           
+        {
             if (!(obj is CMYKColor))
                 return false;
             CMYKColor other = (CMYKColor) obj;

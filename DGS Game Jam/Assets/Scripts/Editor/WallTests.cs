@@ -24,7 +24,8 @@ namespace Editor
             Wall wall = new Wall(Color.red);
             Assert.IsTrue(wall.IsDestroyedByColor(Color.red));          
             Assert.IsFalse(wall.IsDestroyedByColor(Color.blue));           
-            Assert.IsFalse(wall.IsDestroyedByColor(Color.green));     
+            Assert.IsFalse(wall.IsDestroyedByColor(Color.green));        
+            Assert.IsFalse(wall.IsDestroyedByColor(Color.magenta));      
             Assert.IsTrue(wall.IsDestroyedByColor(new Color(0.95f,0,0)));
             Assert.IsFalse(wall.IsDestroyedByColor(new Color(0.85f,0,0)));
             Assert.IsFalse(wall.IsDestroyedByColor(new Color(0.95f,0.05f,0.05f)));       
