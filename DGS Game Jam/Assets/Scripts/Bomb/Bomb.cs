@@ -14,6 +14,8 @@ public class Bomb : MonoBehaviour {
     private SpriteRenderer _colorSprite;
     [SerializeField]
     private float _decay, _force;
+    [SerializeField]
+    private ParticleSystem thrust, content;
 
     public delegate void BombFireEventHandler();
     public static event BombFireEventHandler onFire;
@@ -36,6 +38,7 @@ public class Bomb : MonoBehaviour {
     public void Fire()
     {
         onFire?.Invoke();
+        thrust.Play();
         _rigidbody2D.isKinematic = false;
         GetAmounts();
         Dictionary<Color, float> temp = new Dictionary<Color, float>() { { Color.cyan, _cyan},
@@ -45,17 +48,22 @@ public class Bomb : MonoBehaviour {
         isFired = true;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (isFired)
         {
-            Drain();
             if (_bombColors.CurrentThrust > 0)
             {
+                Drain();
                 _rigidbody2D.AddForce(-transform.up * _bombColors.CurrentThrust * _force, ForceMode2D.Force);
             }
         }
         
+    }
+
+    private void OnEmpty()
+    {
+        thrust.Stop();
     }
 
     private void GetAmounts()
