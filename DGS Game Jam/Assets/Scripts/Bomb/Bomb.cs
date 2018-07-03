@@ -11,6 +11,9 @@ public class Bomb : MonoBehaviour {
     [SerializeField]
     private float _decay, _force;
 
+    public delegate void BombFireEventHandler();
+    public static event BombFireEventHandler onFire;
+
     private float _cyan, _magenta, _yellow;
     private bool isFired;
     private BombColors _bombColors;
@@ -24,6 +27,7 @@ public class Bomb : MonoBehaviour {
 
     public void Fire()
     {
+        onFire?.Invoke();
         _rigidbody2D.isKinematic = false;
         GetAmounts();
         Dictionary<Color, float> temp = new Dictionary<Color, float>() { { Color.cyan, _cyan},
