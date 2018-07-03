@@ -5,12 +5,12 @@ using UnityEngine.Assertions;
 
 namespace Colors
 {
-    [SerializeField]
+    [System.Serializable]
     public class BombColors
     {
         private readonly Dictionary<Color, float> _currentColors = new Dictionary<Color, float>();
 
-
+        [System.Serializable]
         private class BombInspector
         {
             public Color color;
@@ -24,8 +24,9 @@ namespace Colors
         }
 
         [Header("Debug")]
+        [SerializeField]
         private BombInspector[] _bombInspector;
-        
+
         public BombColors(Dictionary<Color, float> colors)
         {
             this._bombInspector = new BombInspector[colors.Count];
@@ -46,20 +47,22 @@ namespace Colors
         {
             Assert.IsTrue(this._currentColors.ContainsKey(color));
             this._currentColors[color] += amount;
+            this._bombInspector.First(x => x.color == color).amount = this._currentColors[color];
         }
 
         public void Decrease(Color color, float amount)
         {
             Assert.IsTrue(this._currentColors.ContainsKey(color));
-            this._currentColors[color] -= Mathf.Max(0,amount);
+            this._currentColors[color] = Mathf.Max(0, this._currentColors[color] - amount);
+            this._bombInspector.First(x => x.color == color).amount = this._currentColors[color];
         }
 
         public void DecreaseAll(float amount)
         {
-            List<Color> keys = _currentColors.Keys.ToList();
-            foreach(var key in keys)
+            List<Color> keys = this._currentColors.Keys.ToList();
+            foreach (var key in keys)
             {
-                Decrease(key, amount);
+                this.Decrease(key, amount);
             }
         }
     }
