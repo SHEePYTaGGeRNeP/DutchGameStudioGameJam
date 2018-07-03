@@ -46,6 +46,7 @@ namespace Colors
             result.r = Mathf.Clamp01(result.r * scale);
             result.g = Mathf.Clamp01(result.g * scale);
             result.b = Mathf.Clamp01(result.b * scale);
+            result.a = 1;
             return result;
         }
 
@@ -62,6 +63,8 @@ namespace Colors
             if (remainderColor.r > tolerance || remainderColor.g > tolerance || remainderColor.b > tolerance)
                 return false;
             if (remainderColor.r < -tolerance || remainderColor.g < -tolerance || remainderColor.b < -tolerance)
+                return false;
+            if (Math.Abs(remainderColor.r) + Math.Abs(remainderColor.g) + Math.Abs(remainderColor.b) > tolerance)
                 return false;
             return true;
         }
