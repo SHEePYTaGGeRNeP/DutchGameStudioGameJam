@@ -30,7 +30,7 @@ namespace Obstacles
                 return;
             if (!this._wall.IsDestroyedByColor(b.CurrentColor))
                 return;
-            Destroy(this);
+            Destroy(this.gameObject);
         }
                 
     }

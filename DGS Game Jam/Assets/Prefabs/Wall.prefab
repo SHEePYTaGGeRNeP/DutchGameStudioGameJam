@@ -79,7 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _wall:
-    wallColor: {r: 1, g: 0, b: 0, a: 1}
+    wallColor: {r: 1, g: 1, b: 0, a: 1}
     wallTolerance: 0.25
 --- !u!212 &212812424672432714
 SpriteRenderer:

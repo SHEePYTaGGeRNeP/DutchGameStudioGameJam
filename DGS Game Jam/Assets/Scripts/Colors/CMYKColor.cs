@@ -46,6 +46,7 @@ namespace Colors
             result.r = Mathf.Clamp01(result.r * scale);
             result.g = Mathf.Clamp01(result.g * scale);
             result.b = Mathf.Clamp01(result.b * scale);
+            result.a = 1;
             return result;
         }
 
