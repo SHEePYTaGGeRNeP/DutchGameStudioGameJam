@@ -35,7 +35,7 @@ namespace Colors
             Color result = new Color(0, 0, 0, 0);
             KeyValuePair<Color, float>[] notEmpty = aColors.Where(x => x.Value > 0).ToArray();
             if (notEmpty.Length == 0)
-                return result;
+                return Color.black;
             foreach (KeyValuePair<Color, float> col in notEmpty)
             {
                 result += (col.Key * col.Value);
