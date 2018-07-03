@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Colors
@@ -27,12 +28,12 @@ namespace Colors
             this.k = k;
         }
 
-        public static Color CombineColors(params Color[] aColors)
+        public static Color CombineColors(params KeyValuePair<Color, int>[] aColors)
         {
             Color result = new Color(0,0,0,0);
-            foreach(Color col in aColors)
+            foreach(KeyValuePair<Color, int> col in aColors)
             {
-                result += col;
+                result += col.Key * col.Value;
             }
             result /= aColors.Length;
             return result;

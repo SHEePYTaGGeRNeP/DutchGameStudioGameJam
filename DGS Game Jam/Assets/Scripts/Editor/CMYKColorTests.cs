@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using Colors;
 using NUnit.Framework;
 using UnityEditor;
@@ -46,14 +47,15 @@ namespace Editor
         [Test]
         public void _TEST_MIX_COLORS()
         {
-            Assert.AreEqual(Color.magenta, CMYKColor.CombineColors(Color.red, Color.blue));
+            Assert.AreEqual(Color.magenta, CMYKColor.CombineColors(new KeyValuePair<Color, int>(Color.red, 1), 
+                new KeyValuePair<Color, int>(Color.blue,1)));
         }
 
 
         // A UnityTest behaves like a coroutine in PlayMode
         // and allows you to yield null to skip a frame in EditMode
         [UnityTest]
-        public IEnumerator TestsWithEnueratorPasses()
+        public IEnumerator TestsWithEnumeratorPasses()
         {
             // Use the Assert class to test conditions.
             // yield to skip a frame
