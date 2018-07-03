@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Colors;
 using UnityEngine.UI;
+using System;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Bomb : MonoBehaviour {
@@ -16,6 +17,8 @@ public class Bomb : MonoBehaviour {
     private float _decay, _force;
     [SerializeField]
     private ParticleSystem thrust, content;
+    [SerializeField]
+    private BombColors _bombColors;
 
     public delegate void BombFireEventHandler();
     public static event BombFireEventHandler onFire;
@@ -23,9 +26,9 @@ public class Bomb : MonoBehaviour {
     private float _cyan, _magenta, _yellow;
     private bool isFired;
     private Rigidbody2D _rigidbody2D;
+    private ParticleSystem[] _thrustChildren;
 
-    [SerializeField]
-    private BombColors _bombColors;
+
 
     public Color CurrentColor { get { return this._bombColors.CurrentColorValue; } }
 
@@ -33,6 +36,8 @@ public class Bomb : MonoBehaviour {
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _rigidbody2D.isKinematic = true;
+        _thrustChildren = thrust.GetComponentsInParent<ParticleSystem>();
+        _bombColors.OnEmpty += OnEmpty;
     }
 
     public void Fire()
@@ -54,6 +59,10 @@ public class Bomb : MonoBehaviour {
         {
             if (_bombColors.CurrentThrust > 0)
             {
+                foreach(ParticleSystem p in _thrustChildren)
+                {
+                    p.SetStartColor(_bombColors.CurrentColorValue);
+                }
                 thrust.SetStartColor(_bombColors.CurrentColorValue);
                 Drain();
                 _rigidbody2D.AddForce(-transform.up * _bombColors.CurrentThrust * _force, ForceMode2D.Force);
@@ -62,7 +71,7 @@ public class Bomb : MonoBehaviour {
         
     }
 
-    private void OnEmpty()
+    private void OnEmpty(object sender, EventArgs e)
     {
         thrust.Stop();
     }

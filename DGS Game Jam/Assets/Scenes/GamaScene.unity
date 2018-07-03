@@ -25534,6 +25534,7 @@ MonoBehaviour:
   _cyanFill: {fileID: 1787535073}
   _magentaFill: {fileID: 2004936195}
   _yellowFill: {fileID: 2079861535}
+  _colorSprite: {fileID: 583596435}
   _decay: 0.01
   _force: 20
   thrust: {fileID: 1041222815}
