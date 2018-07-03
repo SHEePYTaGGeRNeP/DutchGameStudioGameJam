@@ -16,9 +16,11 @@ public class Bomb : MonoBehaviour {
 
     private float _cyan, _magenta, _yellow;
     private bool isFired;
-    private BombColors _bombColors;
     private Rigidbody2D _rigidbody2D;
 
+    [SerializeField]
+    private BombColors _bombColors;
+    
     private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
