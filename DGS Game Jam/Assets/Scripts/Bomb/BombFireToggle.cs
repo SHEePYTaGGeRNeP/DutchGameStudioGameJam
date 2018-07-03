@@ -13,6 +13,11 @@ public class BombFireToggle : MonoBehaviour {
         Bomb.onFire += Enable;
     }
 
+    private void OnDestroy()
+    {
+        Bomb.onFire -= this.Enable;
+    }
+
     private void Enable()
     {
         _component.enabled = true;
