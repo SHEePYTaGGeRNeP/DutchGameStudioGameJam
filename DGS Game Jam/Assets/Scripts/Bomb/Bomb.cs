@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Colors;
@@ -46,6 +47,7 @@ public class Bomb : MonoBehaviour {
                                                                          { Color.yellow, _yellow}};
         _bombColors = new BombColors(temp);
         isFired = true;
+        _bombColors.OnEmpty += this.OnEmpty;
     }
 
     private void FixedUpdate()
@@ -62,8 +64,9 @@ public class Bomb : MonoBehaviour {
         
     }
 
-    private void OnEmpty()
+    private void OnEmpty(object sender, EventArgs e)
     {
+        LogHelper.Log(typeof(Bomb), "ON EMPTY!");
         thrust.Stop();
     }
 
