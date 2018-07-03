@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using DefaultNamespace;
+using UnityEngine;
 
 namespace Obstacles
 {
@@ -7,13 +9,15 @@ namespace Obstacles
     {
         private SpriteRenderer _spriteRenderer;
 
+        public static event EventHandler OnBlockDestroyed;
+            
         [SerializeField]
         private Wall _wall;
 
         private void Awake()
         {
             this._spriteRenderer = this.GetComponent<SpriteRenderer>();
-            this.UpdateColor(this._wall.wallColor);
+            this.UpdateColor(this._spriteRenderer.color);
         }
 
         public void UpdateColor(Color c)
@@ -30,6 +34,7 @@ namespace Obstacles
                 return;
             if (!this._wall.IsDestroyedByColor(b.CurrentColor))
                 return;
+            OnBlockDestroyed?.Invoke(this, null);
             Destroy(this.gameObject);
         }
                 
