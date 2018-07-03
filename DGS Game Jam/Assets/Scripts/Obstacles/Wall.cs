@@ -21,7 +21,9 @@ namespace Obstacles
         {
             Color remainder = this.wallColor - color;
             bool isWithinTolerance = CMYKColor.IsWithinTolerance(remainder, this.wallTolerance);
-            LogHelper.Log(typeof(Wall), String.Format("{0} - {1}. Destroy={2}", this.wallColor , color, isWithinTolerance));
+            LogHelper.Log(typeof(Wall),
+                String.Format("Destroy={0}/Dif{1} - This({2}) - Ball({3})", isWithinTolerance, remainder, this.wallColor,
+                    color));
             return isWithinTolerance;
         }
     }
