@@ -67,7 +67,7 @@ namespace Colors
             Assert.IsTrue(this._currentColors.ContainsKey(color));
             this._currentColors[color] = Mathf.Max(0, this._currentColors[color] - amount);
             this._bombInspector.First(x => x.color == color).amount = this._currentColors[color];
-            if (!this._bombInspector.All(x => x.amount <= 0))
+            if (this._invokedEvent || !this._bombInspector.All(x => x.amount <= 0))
                 return;
             this._invokedEvent = true;
             this.OnEmpty?.Invoke(this, null);
