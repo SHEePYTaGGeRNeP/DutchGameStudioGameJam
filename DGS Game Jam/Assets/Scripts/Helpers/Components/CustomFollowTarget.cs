@@ -18,6 +18,9 @@ namespace Assets.Scripts.Helpers.Components
         [SerializeField]
         private bool _moveZ = true;
 
+        [SerializeField]
+        private float _speed;
+
 
         private void Awake()
         {
@@ -38,7 +41,9 @@ namespace Assets.Scripts.Helpers.Components
                 newPosition.y = this.Target.position.y + this._offset.y;
             if (this._moveZ)
                 newPosition.z = this.Target.position.z + this._offset.z;
-            this.transform.position = newPosition;
+            this.transform.position = Vector3.Lerp(this.transform.position,
+                                                   newPosition,
+                                                   Time.deltaTime * _speed);
         }
     }
 }
