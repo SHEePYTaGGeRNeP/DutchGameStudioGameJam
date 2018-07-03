@@ -36,7 +36,7 @@ public class Bomb : MonoBehaviour {
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _rigidbody2D.isKinematic = true;
-        _thrustChildren = thrust.GetComponentsInParent<ParticleSystem>();
+        _thrustChildren = thrust.GetComponentsInChildren<ParticleSystem>();
         _bombColors.OnEmpty += OnEmpty;
     }
 
@@ -73,6 +73,7 @@ public class Bomb : MonoBehaviour {
 
     private void OnEmpty(object sender, EventArgs e)
     {
+        Debug.Log(1);
         thrust.Stop();
     }
 
