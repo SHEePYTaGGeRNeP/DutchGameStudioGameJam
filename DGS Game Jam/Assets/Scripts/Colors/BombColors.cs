@@ -5,40 +5,70 @@ using UnityEngine.Assertions;
 
 namespace Colors
 {
+    [System.Serializable]
     public class BombColors
     {
         private readonly Dictionary<Color, float> _currentColors = new Dictionary<Color, float>();
 
-        public BombColors(Dictionary<Color, float> colors)
+        [System.Serializable]
+        private class BombInspector
         {
-            foreach (KeyValuePair<Color, float> pair in colors)
+            public Color color;
+            public float amount;
+
+            public BombInspector(Color color, float amount)
             {
-                this._currentColors.Add(pair.Key, pair.Value);
+                this.color = color;
+                this.amount = amount;
             }
         }
 
+        [Header("Debug")]
+        [SerializeField]
+        private BombInspector[] _bombInspector;
 
+        public BombColors(Dictionary<Color, float> colors)
+        {
+            this._bombInspector = new BombInspector[colors.Count];
+            int index = 0;
+            foreach (KeyValuePair<Color, float> pair in colors)
+            {
+                this._currentColors.Add(pair.Key, pair.Value);
+                this._bombInspector[index] = new BombInspector(pair.Key, pair.Value);
+                index++;
+            }
+        }
+
+        
         public Color CurrentColorValue { get { return CMYKColor.CombineColors(this._currentColors.Select(x => x)); } }
         public float CurrentThrust { get { return CMYKColor.ToForce(this.CurrentColorValue); } }
+
+        public float GetAmount(Color color)
+        {
+            Assert.IsTrue(this._currentColors.ContainsKey(color));
+            return this._currentColors[color];
+        }
 
         public void Increase(Color color, float amount)
         {
             Assert.IsTrue(this._currentColors.ContainsKey(color));
             this._currentColors[color] += amount;
+            this._bombInspector.First(x => x.color == color).amount = this._currentColors[color];
         }
 
         public void Decrease(Color color, float amount)
         {
             Assert.IsTrue(this._currentColors.ContainsKey(color));
-            this._currentColors[color] -= Mathf.Max(0,amount);
+            this._currentColors[color] = Mathf.Max(0, this._currentColors[color] - amount);
+            this._bombInspector.First(x => x.color == color).amount = this._currentColors[color];
         }
 
         public void DecreaseAll(float amount)
         {
-            List<Color> keys = _currentColors.Keys.ToList();
-            foreach(var key in keys)
+            List<Color> keys = this._currentColors.Keys.ToList();
+            foreach (var key in keys)
             {
-                Decrease(key, amount);
+                this.Decrease(key, amount);
             }
         }
     }
