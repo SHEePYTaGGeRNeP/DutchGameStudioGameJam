@@ -54,6 +54,7 @@ public class Bomb : MonoBehaviour {
         {
             if (_bombColors.CurrentThrust > 0)
             {
+                thrust.SetStartColor(_bombColors.CurrentColorValue);
                 Drain();
                 _rigidbody2D.AddForce(-transform.up * _bombColors.CurrentThrust * _force, ForceMode2D.Force);
             }
