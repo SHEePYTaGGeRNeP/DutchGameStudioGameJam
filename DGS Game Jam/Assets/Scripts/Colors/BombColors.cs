@@ -39,9 +39,15 @@ namespace Colors
             }
         }
 
-
+        
         public Color CurrentColorValue { get { return CMYKColor.CombineColors(this._currentColors.Select(x => x)); } }
         public float CurrentThrust { get { return CMYKColor.ToForce(this.CurrentColorValue); } }
+
+        public float GetAmount(Color color)
+        {
+            Assert.IsTrue(this._currentColors.ContainsKey(color));
+            return this._currentColors[color];
+        }
 
         public void Increase(Color color, float amount)
         {
