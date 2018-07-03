@@ -10,12 +10,19 @@ public class SliderClamper : MonoBehaviour {
     [SerializeField]
     int _maxTotal;
 
+    private bool active;
+
     private void Awake()
     {
        foreach(SliderPreviousValue s in _sliders)
         {
             s.Slider.onValueChanged.AddListener(delegate{ ClampSlider(); });
         }
+    }
+
+    private void SetActive()
+    {
+
     }
 
     private void ClampSlider()
@@ -35,7 +42,6 @@ public class SliderClamper : MonoBehaviour {
         {
             total += s.Slider.normalizedValue;
         }
-        Debug.Log(total);
         return total;
     }
 

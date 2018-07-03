@@ -74,7 +74,7 @@ namespace Colors
 
         public override string ToString()
         {
-            return $"{this.c},{this.m},{this.y},{this.k}";
+            return String.Format("{0} {1} {2} {3}", this.c, this.m, this.y, this.k);
         }
 
         #region Equal Overrides

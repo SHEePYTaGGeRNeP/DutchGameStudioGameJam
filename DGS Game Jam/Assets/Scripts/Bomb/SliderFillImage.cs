@@ -12,6 +12,14 @@ public class SliderFillImage : MonoBehaviour {
 
     private Image _image;
 
+    public Slider Slider
+    {
+        get
+        {
+            return _slider;
+        }
+    }
+
     private void Awake()
     {
         _image = GetComponent<Image>();
