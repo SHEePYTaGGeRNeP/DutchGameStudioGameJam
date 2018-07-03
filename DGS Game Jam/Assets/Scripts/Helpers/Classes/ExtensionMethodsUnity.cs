@@ -6,6 +6,11 @@ using UnityEngine;
 // ReSharper disable once CheckNamespace
 public static class ExtensionMethodsUnity
 {
+    public static float RGBSum(this Color color)
+    {
+        return color.r + color.g + color.b;
+    }
+
     public static float[] GetColorRGB(this Color color)
     {
         return new[] {color.r, color.g, color.b};

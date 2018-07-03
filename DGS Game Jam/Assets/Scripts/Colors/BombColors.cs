@@ -5,15 +5,36 @@ using UnityEngine.Assertions;
 
 namespace Colors
 {
+    [SerializeField]
     public class BombColors
     {
         private readonly Dictionary<Color, float> _currentColors = new Dictionary<Color, float>();
 
+
+        private class BombInspector
+        {
+            public Color color;
+            public float amount;
+
+            public BombInspector(Color color, float amount)
+            {
+                this.color = color;
+                this.amount = amount;
+            }
+        }
+
+        [Header("Debug")]
+        private BombInspector[] _bombInspector;
+        
         public BombColors(Dictionary<Color, float> colors)
         {
+            this._bombInspector = new BombInspector[colors.Count];
+            int index = 0;
             foreach (KeyValuePair<Color, float> pair in colors)
             {
                 this._currentColors.Add(pair.Key, pair.Value);
+                this._bombInspector[index] = new BombInspector(pair.Key, pair.Value);
+                index++;
             }
         }
 
