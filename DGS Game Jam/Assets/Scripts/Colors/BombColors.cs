@@ -45,7 +45,7 @@ namespace Colors
 
         
         public Color CurrentColorValue { get { return CMYKColor.CombineColors(this._currentColors.Select(x => x)); } }
-        public float CurrentThrust { get { return CMYKColor.ToForce(this.CurrentColorValue); } }
+        public float CurrentThrust { get { return this._currentColors.All(x => x.Value <= 0) ? 0f : 2f; } }
 
         public float GetAmount(Color color)
         {
